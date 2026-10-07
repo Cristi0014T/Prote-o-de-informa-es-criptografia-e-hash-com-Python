@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proteção de Informações: Criptografia e Hash com Python</title>
+
+  <style>
+    :root {
+      --fundo: #f3f6fc;
+      --texto: #202b3c;
+      --azul: #2457a7;
+      --azul-claro: #e8f0ff;
+      --branco: #fff;
+      --codigo: #172033;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      color: var(--texto);
+      background: var(--fundo);
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 54px 20px;
+      text-align: center;
+      color: var(--branco);
+      background: linear-gradient(135deg, #173b75, #2878b8);
+    }
+
+    header h1 {
+      max-width: 900px;
+      margin: 0 auto 12px;
+      font-size: clamp(2rem, 5vw, 3rem);
+    }
+
+    header p {
+      max-width: 720px;
+      margin: auto;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 18px;
+      padding: 14px;
+      background: #142d55;
+    }
+
+    nav a {
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      width: min(950px, 92%);
+      margin: 30px auto;
+    }
+
+    section {
+      margin-bottom: 22px;
+      padding: 25px;
+      background: var(--branco);
+      border-radius: 12px;
+      box-shadow: 0 4px 14px #1d315015;
+    }
+
+    h2 {
+      margin-bottom: 12px;
+      color: var(--azul);
+    }
+
+    ul, ol {
+      padding-left: 24px;
+    }
+
+    li {
+      margin: 8px 0;
+    }
+
+    .destaque {
+      background: var(--azul-claro);
+      border-left: 5px solid var(--azul);
+    }
+
+    pre {
+      overflow-x: auto;
+      margin: 14px 0;
+      padding: 18px;
+      color: #eaf1ff;
+      background: var(--codigo);
+      border-radius: 8px;
+    }
+
+    code {
+      font-family: Consolas, monospace;
+    }
+
+    .pergunta {
+      margin: 18px 0;
+    }
+
+    label {
+      display: block;
+      margin: 8px 0;
+      cursor: pointer;
+    }
+
+    button {
+      padding: 12px 18px;
+      border: none;
+      border-radius: 7px;
+      color: white;
+      background: var(--azul);
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #173e7c;
+    }
+
+    #resultado {
+      margin-top: 14px;
+      font-weight: bold;
+    }
+
+    footer {
+      padding: 22px;
+      text-align: center;
+      color: #526078;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>🔐 Proteção de Informações</h1>
+    <p>Criptografia e hash com Python: entenda como proteger dados digitais.</p>
+  </header>
+
+  <nav aria-label="Navegação principal">
+    <a href="#objetivo">Objetivo</a>
+    <a href="#conceitos">Conceitos</a>
+    <a href="#python">Python</a>
+    <a href="#atividade">Atividade</a>
+  </nav>
+
+  <main>
+    <section id="objetivo" class="destaque">
+      <h2>🎯 Objetivo do projeto</h2>
+      <p>
+        Conhecer duas técnicas importantes de segurança da informação — criptografia
+        e hash — e observar como elas podem ser usadas em programas escritos em Python.
+      </p>
+    </section>
+
+    <section id="conceitos">
+      <h2>🧠 Criptografia e hash: qual é a diferença?</h2>
+
+      <h3>Criptografia</h3>
+      <p>
+        A criptografia transforma uma informação em um formato protegido. Com a chave
+        correta, é possível descriptografar os dados e recuperar a informação original.
+        Ela pode ser usada, por exemplo, para proteger arquivos e comunicações.
+      </p>
+
+      <h3>Hash</h3>
+      <p>
+        Uma função hash transforma dados em uma sequência de tamanho fixo. Em geral,
+        o processo é unidirecional: não foi feito para recuperar o texto original.
+        Hashes são usados para verificar integridade e, com técnicas adicionais,
+        armazenar senhas de maneira mais segura.
+      </p>
+
+      <ul>
+        <li><strong>Criptografia:</strong> pode ser revertida com a chave apropriada.</li>
+        <li><strong>Hash:</strong> não deve ser tratado como uma forma de criptografia reversível.</li>
+      </ul>
+    </section>
+
+    <section id="python">
+      <h2>🐍 Exemplos com Python</h2>
+
+      <h3>Gerar um hash SHA-256</h3>
+      <p>
+        O módulo <code>hashlib</code>, incluído no Python, permite calcular hashes.
+        Este exemplo é para fins educativos e não é suficiente para armazenar senhas.
+      </p>
+
+      <pre><code>import hashlib
+
+mensagem = "Olá, segurança!".encode("utf-8")
+resultado = hashlib.sha256(mensagem).hexdigest()
+
+print(resultado)</code></pre>
+
+      <h3>Criptografia com Fernet</h3>
+      <p>
+        Para um exemplo de criptografia simétrica, pode-se usar a biblioteca
+        <code>cryptography</code>. Instale-a com <code>pip install cryptography</code>.
+      </p>
+
+      <pre><code>from cryptography.fernet import Fernet
+
+# Gere uma chave e guarde-a em local seguro.
+chave = Fernet.generate_key()
+cifra = Fernet(chave)
+
+texto = "Informação confidencial".encode("utf-8")
+texto_protegido = cifra.encrypt(texto)
+texto_original = cifra.decrypt(texto_protegido)
+
+print(texto_protegido)
+print(texto_original.decode("utf-8"))</code></pre>
+
+      <p>
+        Em aplicações reais, não exponha chaves no código-fonte. Guarde-as usando
+        mecanismos seguros de configuração e controle de acesso.
+      </p>
+    </section>
+
+    <section class="destaque">
+      <h2>⚠️ Cuidados importantes</h2>
+      <ul>
+        <li>SHA-256 sozinho não é adequado para armazenar senhas.</li>
+        <li>Para senhas, prefira algoritmos próprios, como Argon2, scrypt ou bcrypt, com salt.</li>
+        <li>Mantenha chaves privadas em local seguro e limite quem pode acessá-las.</li>
+        <li>Use bibliotecas reconhecidas em vez de criar algoritmos de segurança próprios.</li>
+        <li>Proteja também os dispositivos, as cópias de segurança e o acesso às informações.</li>
+      </ul>
+    </section>
+
+    <section id="atividade">
+      <h2>📝 Quiz rápido</h2>
+
+      <div class="pergunta">
+        <p><strong>1. Qual é uma característica da criptografia?</strong></p>
+        <label><input type="radio" name="q1" value="certa"> Pode ser revertida com a chave apropriada</label>
+        <label><input type="radio" name="q1" value="errada"> Sempre transforma dados em algo impossível de recuperar</label>
+      </div>
+
+      <div class="pergunta">
+        <p><strong>2. Para que serve principalmente um hash?</strong></p>
+        <label><input type="radio" name="q2" value="errada"> Recuperar o texto original usando uma chave</label>
+        <label><input type="radio" name="q2" value="certa"> Gerar uma representação para verificar dados, entre outros usos</label>
+      </div>
+
+      <button type="button" onclick="verificarRespostas()">Verificar respostas</button>
+      <p id="resultado" aria-live="polite"></p>
+    </section>
+
+    <section>
+      <h2>💬 Desafio para a turma</h2>
+      <p>
+        Em duplas, escolham uma informação que precisa de proteção. Expliquem se
+        usariam criptografia, hash ou outra medida de segurança — e justifiquem
+        a escolha. Não utilizem senhas ou dados pessoais reais nos testes.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Projeto educativo • Segurança da informação com Python</p>
+  </footer>
+
+  <script>
+    function verificarRespostas() {
+      const q1 = document.querySelector('input[name="q1"]:checked');
+      const q2 = document.querySelector('input[name="q2"]:checked');
+      const resultado = document.getElementById("resultado");
+
+      if (!q1 || !q2) {
+        resultado.textContent = "Responda às duas perguntas antes de verificar.";
+        resultado.style.color = "#9a5b00";
+        return;
+      }
+
+      const pontos =
+        Number(q1.value === "certa") +
+        Number(q2.value === "certa");
+
+      resultado.textContent = pontos === 2
+        ? "🎉 Muito bem! Você acertou as duas respostas."
+        : `Você acertou ${pontos} de 2. Revise os conceitos e tente novamente.`;
+
+      resultado.style.color = pontos === 2 ? "#16703c" : "#9a5b00";
+    }
+  </script>
+</body>
+</html>
